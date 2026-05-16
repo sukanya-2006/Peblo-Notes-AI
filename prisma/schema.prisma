@@ -43,4 +43,6 @@ model Note {
   createdAt       DateTime @default(now())
 
   updatedAt       DateTime @updatedAt
+
+  pinned    Boolean   @default(false)
 }

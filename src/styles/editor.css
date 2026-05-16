@@ -1,0 +1,339 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #09090b;
+  color: #fafafa;
+
+  overflow: hidden;
+}
+
+/* =========================
+   GLASS PANELS
+========================= */
+
+.glass-panel {
+  background: rgba(24, 24, 27, 0.72);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  border:
+    1px solid rgba(255, 255, 255, 0.05);
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+
+  transition:
+    all 0.25s ease;
+}
+
+.glass-panel:hover {
+  border-color:
+    rgba(255, 255, 255, 0.08);
+
+  transform: translateY(-1px);
+}
+
+/* =========================
+   DASHBOARD TYPOGRAPHY
+========================= */
+
+.dashboard-heading {
+  font-size: 2.8rem;
+
+  font-weight: 800;
+
+  letter-spacing: -0.06em;
+
+  line-height: 1;
+
+  color: white;
+}
+
+/* =========================
+   NOTE TITLE
+========================= */
+
+.note-title {
+  font-size: 3.2rem;
+
+  font-weight: 800;
+
+  letter-spacing: -0.05em;
+
+  line-height: 1.05;
+
+  color: white;
+
+  transition: all 0.2s ease;
+}
+
+.note-title:focus {
+  outline: none;
+}
+
+/* =========================
+   EDITOR CONTENT
+========================= */
+
+.editor-content {
+  line-height: 1.95;
+
+  letter-spacing: -0.015em;
+
+  color:
+    rgba(255, 255, 255, 0.92);
+
+  font-size: 1.08rem;
+
+  font-weight: 500;
+}
+
+/* =========================
+   MODERN TEXTAREA
+========================= */
+
+.modern-textarea {
+  background: transparent;
+
+  border: none;
+  outline: none;
+
+  resize: none;
+
+  width: 100%;
+  min-height: 500px;
+
+  font-size: 1.08rem;
+
+  line-height: 1.95;
+
+  letter-spacing: -0.015em;
+
+  font-weight: 500;
+
+  color:
+    rgba(255,255,255,0.92);
+
+  transition: all 0.2s ease;
+}
+
+.modern-textarea::placeholder {
+  color:
+    rgba(255,255,255,0.25);
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar-surface {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(24,24,27,0.92),
+      rgba(9,9,11,0.96)
+    );
+
+  border-right:
+    1px solid rgba(255,255,255,0.05);
+}
+
+.sidebar-note-title {
+  font-weight: 600;
+
+  color:
+    rgba(255,255,255,0.92);
+
+  letter-spacing: -0.02em;
+}
+
+/* =========================
+   NOTE CARDS
+========================= */
+
+.note-card {
+  transition:
+    transform 0.22s ease,
+    background 0.22s ease,
+    border 0.22s ease;
+}
+
+.note-card:hover {
+  transform: translateY(-2px);
+
+  background:
+    rgba(255,255,255,0.04);
+}
+
+/* =========================
+   PINNED NOTES
+========================= */
+
+.pinned-note {
+  border:
+    1px solid rgba(250, 204, 21, 0.2);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(250, 204, 21, 0.08),
+      rgba(24, 24, 27, 0.85)
+    );
+}
+
+/* =========================
+   AI GLOW
+========================= */
+
+.ai-glow {
+  position: relative;
+}
+
+.ai-glow::before {
+  content: "";
+
+  position: absolute;
+
+  inset: -1px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(139, 92, 246, 0.5),
+      rgba(59, 130, 246, 0.4)
+    );
+
+  border-radius: inherit;
+
+  z-index: -1;
+
+  filter: blur(20px);
+
+  opacity: 0.25;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.smooth-button {
+  transition:
+    transform 0.18s ease,
+    opacity 0.18s ease,
+    background 0.18s ease;
+}
+
+.smooth-button:hover {
+  transform: scale(1.02);
+}
+
+.smooth-button:active {
+  transform: scale(0.98);
+}
+
+.primary-button {
+  font-weight: 700;
+
+  letter-spacing: -0.02em;
+}
+
+/* =========================
+   GRADIENT TEXT
+========================= */
+
+.gradient-text {
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #a1a1aa
+    );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* =========================
+   FOCUS STATES
+========================= */
+
+.focus-ring:focus {
+  outline: none;
+
+  box-shadow:
+    0 0 0 2px rgba(139,92,246,0.35);
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+.fade-in {
+  animation:
+    fadeIn 0.35s ease;
+}
+
+.float-soft {
+  animation:
+    floatSoft 5s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes floatSoft {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background:
+    rgba(255,255,255,0.12);
+
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background:
+    rgba(255,255,255,0.22);
+}

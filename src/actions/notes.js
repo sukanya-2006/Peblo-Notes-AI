@@ -1,27 +1,4 @@
-/**
- * actions/notes.js
- *
- * Centralized data access layer for Peblo Notes.
- * All API communication flows through here — components never call fetch() directly.
- *
- * Functions:
- *   fetchNotes(filters)          → Note[]
- *   createNote(fields)           → Note
- *   updateNote(id, fields)       → Note
- *   deleteNote(id)               → { message }
- *   shareNote(id)                → { note, shareUrl }
- *   generateAISummary(note)      → { summary, actionItems, suggestedTitle }
- *   saveAIResults(id, aiData)    → Note
- */
 
-// ─── Internal helper ──────────────────────────────────────────────────────────
-
-/**
- * Thin wrapper around fetch that:
- *  - Sets JSON headers automatically for non-GET requests
- *  - Throws a descriptive error when the server responds with a non-2xx status
- *  - Returns the parsed JSON body
- */
 async function apiFetch(url, options = {}) {
     const { body, ...rest } = options;
 
@@ -167,3 +144,4 @@ export async function saveAIResults(id, { summary, actionItems, suggestedTitle }
         aiUsed: true,
     });
 }
+
