@@ -13,6 +13,13 @@ import {
   StickyNote,
 } from "lucide-react";
 
+import { supabase } from "@/lib/supabase";
+
+import {
+  useEffect,
+  useState,
+} from "react";
+
 export default function NotesSidebar({
   notes,
   activeNote,
@@ -28,6 +35,26 @@ export default function NotesSidebar({
   view,
   setView,
 }) {
+  const [username, setUsername] =
+    useState("Peblo User");
+
+  useEffect(() => {
+    async function getUser() {
+      const {
+        data: { user },
+      } =
+        await supabase.auth.getUser();
+
+      setUsername(
+        user?.user_metadata
+          ?.username ||
+          "Peblo User"
+      );
+    }
+
+    getUser();
+  }, []);
+
   const formatDate = (d) => {
     if (!d) return "";
 
@@ -48,7 +75,8 @@ export default function NotesSidebar({
       diff / 86400000
     );
 
-    if (mins < 1) return "Just now";
+    if (mins < 1)
+      return "Just now";
 
     if (mins < 60)
       return `${mins}m ago`;
@@ -86,11 +114,11 @@ export default function NotesSidebar({
 
         <div>
           <span className="text-white text-[15px] font-semibold tracking-tight leading-none">
-            Peblo Notes
+            {username}
           </span>
 
           <p className="text-white/25 text-[10px] mt-1 tracking-wide">
-            Your second brain
+            Peblo Notes Workspace
           </p>
         </div>
       </div>
