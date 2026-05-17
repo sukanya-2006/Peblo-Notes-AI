@@ -1,317 +1,348 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { useMemo, useEffect, useState } from "react";
 
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 24 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] },
-});
+import {
+  Sparkles,
+  Share2,
+  Lock,
+  PencilLine,
+  ArrowRight,
+} from "lucide-react";
 
-export default function Home() {
-  const router = useRouter();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-
+export default function HomePage() {
   return (
-    <main
-      className="min-h-screen overflow-hidden relative flex flex-col items-center justify-center px-6"
-      style={{ background: "radial-gradient(ellipse 80% 60% at 50% -10%, #2d1b69 0%, #0f0a1e 50%, #0a0a0f 100%)" }}
-    >
-      {/* Stars — only render on client to avoid hydration mismatch */}
-      {mounted && <Stars />}
-
-      {/* Floating decorative notes */}
-      {mounted && <FloatingNotes />}
-
-      {/* Glow orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-amber-500/8 rounded-full blur-3xl pointer-events-none" />
-
-      {/* Main content */}
-      <div className="relative z-10 flex flex-col items-center text-center max-w-3xl">
-
-        {/* Logo */}
-        <motion.div {...fadeUp(0)} className="mb-8">
-          <div className="relative inline-flex">
-            <div
-              className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-2xl"
-              style={{ background: "linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%)", boxShadow: "0 0 40px rgba(124,58,237,0.4)" }}
-            >
-              <NoteIcon />
+    <main className="min-h-screen bg-black text-white overflow-x-hidden">
+      {/* NAVBAR */}
+      <header className="fixed top-0 left-0 w-full z-50 border-b border-white/10 bg-black/80 backdrop-blur-xl">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
+          {/* LOGO */}
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-2xl border border-white/10 bg-white/5 flex items-center justify-center">
+              <PencilLine className="w-5 h-5 text-white" />
             </div>
-            <motion.div
-              animate={{ scale: [1, 1.2, 1], opacity: [0.6, 1, 0.6] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-1 -right-1 w-4 h-4 bg-amber-400 rounded-full flex items-center justify-center"
-              style={{ boxShadow: "0 0 12px rgba(251,191,36,0.8)" }}
+
+            <div>
+              <h1 className="text-xl font-semibold tracking-tight">
+                Peblo Notes
+              </h1>
+
+              <p className="text-xs text-zinc-500 -mt-0.5">
+                Your second brain
+              </p>
+            </div>
+          </div>
+
+          {/* NAV LINKS */}
+          <nav className="hidden md:flex items-center gap-10 text-sm text-zinc-400 font-medium">
+            <a
+              href="#features"
+              className="hover:text-white transition"
             >
-              <span style={{ fontSize: 8 }}>✦</span>
+              Features
+            </a>
+
+            <a
+              href="#about"
+              className="hover:text-white transition"
+            >
+              About
+            </a>
+
+            <a
+              href="#ai"
+              className="hover:text-white transition"
+            >
+              AI Insights
+            </a>
+          </nav>
+
+          {/* CTA */}
+          <div className="flex items-center gap-4">
+            <Link
+              href="/auth/login"
+              className="hidden md:flex text-sm text-zinc-300 hover:text-white transition"
+            >
+              Sign In
+            </Link>
+
+            <Link
+              href="/auth/signup"
+              className="px-5 py-2.5 rounded-2xl bg-white text-black text-sm font-semibold hover:scale-[1.03] active:scale-[0.98] transition-all"
+            >
+              Get Started
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      {/* HERO */}
+      <section className="relative pt-32">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-10 lg:pt-20 pb-24">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* LEFT IMAGE */}
+            <motion.div
+              initial={{
+                opacity: 0,
+                x: -40,
+              }}
+              animate={{
+                opacity: 1,
+                x: 0,
+              }}
+              transition={{
+                duration: 0.7,
+              }}
+              className="relative"
+            >
+              <div className="absolute inset-0 bg-white/5 blur-3xl rounded-full" />
+
+              <Image
+                src="/landing-illustration.png"
+                alt="Peblo Notes Illustration"
+                width={900}
+                height={900}
+                priority
+                className="relative z-10 w-full max-w-2xl mx-auto"
+              />
+            </motion.div>
+
+            {/* RIGHT CONTENT */}
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.7,
+                delay: 0.1,
+              }}
+              className="max-w-2xl"
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 mb-8 backdrop-blur-xl">
+                <Sparkles className="w-4 h-4 text-white" />
+
+                <span className="text-sm text-zinc-300 font-medium">
+                  AI-Powered Workspace
+                </span>
+              </div>
+
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[0.95]">
+                Your thoughts,
+                <br />
+                organized.
+                <br />
+                Your ideas,
+                <br />
+                supercharged.
+              </h1>
+
+              <p className="mt-8 text-lg sm:text-xl text-zinc-400 leading-relaxed max-w-xl font-medium">
+                Peblo Notes helps you capture ideas,
+                organize thoughts, generate AI insights,
+                and build your second brain in one
+                beautiful workspace.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 mt-10">
+                <Link
+                  href="/auth/signup"
+                  className="group px-8 py-4 rounded-2xl bg-white text-black font-semibold text-base flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                >
+                  Get Started
+
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+
+                <Link
+                  href="/auth/login"
+                  className="px-8 py-4 rounded-2xl border border-white/10 bg-white/[0.03] text-white font-semibold text-base hover:bg-white/[0.06] transition-all text-center"
+                >
+                  Sign In
+                </Link>
+              </div>
             </motion.div>
           </div>
-        </motion.div>
+        </div>
+      </section>
 
-        {/* Badge */}
-        <motion.div {...fadeUp(0.1)} className="mb-6">
-          <span
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium"
-            style={{ background: "rgba(124,58,237,0.15)", border: "1px solid rgba(124,58,237,0.3)", color: "#c4b5fd" }}
-          >
-            <span style={{ color: "#a78bfa" }}>✦</span>
-            AI-Powered Notes Workspace
-          </span>
-        </motion.div>
-
-        {/* Headline */}
-        <motion.h1
-          {...fadeUp(0.15)}
-          className="font-bold leading-tight mb-4"
-          style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", color: "#fff", letterSpacing: "-0.03em", fontFamily: "'Georgia', serif" }}
-        >
-          Your ideas,{" "}
-          <span style={{ background: "linear-gradient(135deg, #a78bfa, #f59e0b)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            supercharged
-          </span>{" "}
-          by AI
-        </motion.h1>
-
-        {/* Subheadline */}
-        <motion.p
-          {...fadeUp(0.2)}
-          className="leading-relaxed mb-10 max-w-xl"
-          style={{ color: "rgba(255,255,255,0.45)", fontSize: "1.1rem" }}
-        >
-          Write notes, let AI summarize them, organize with tags, and share your thoughts — all in one beautiful workspace built for curious minds.
-        </motion.p>
-
-        {/* CTA Buttons */}
-        <motion.div {...fadeUp(0.25)} className="flex gap-4 mb-16 flex-wrap justify-center">
-          <motion.button
-            whileHover={{ scale: 1.04, y: -2 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => router.push("/auth/signup")}
-            className="px-8 py-3.5 rounded-xl font-semibold text-sm text-white"
-            style={{ background: "linear-gradient(135deg, #7c3aed, #5b21b6)", boxShadow: "0 8px 32px rgba(124,58,237,0.4)" }}
-          >
-            Start for free →
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.04, y: -2 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => router.push("/auth/login")}
-            className="px-8 py-3.5 rounded-xl font-semibold text-sm"
-            style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.8)" }}
-          >
-            Sign in
-          </motion.button>
-        </motion.div>
-
-        {/* Feature pills */}
-        <motion.div {...fadeUp(0.3)} className="flex flex-wrap gap-3 justify-center mb-12">
-          {[
-            { icon: "✦", label: "AI Summaries" },
-            { icon: "⭐", label: "Pin & Organize" },
-            { icon: "🔗", label: "Public Sharing" },
-            { icon: "📊", label: "Smart Insights" },
-            { icon: "🏷️", label: "Tag Notes" },
-          ].map((f, i) => (
-            <motion.div
-              key={f.label}
-              initial={{ opacity: 0, scale: 0.85 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.35 + i * 0.05, duration: 0.4 }}
-              className="flex items-center gap-2 px-4 py-2 rounded-full text-xs"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.5)" }}
-            >
-              <span>{f.icon}</span>
-              {f.label}
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* App preview */}
-        <motion.div {...fadeUp(0.4)} className="w-full max-w-2xl">
-          <AppPreview />
-        </motion.div>
-      </div>
-
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8 }}
-        className="absolute bottom-6 text-center text-xs"
-        style={{ color: "rgba(255,255,255,0.2)" }}
+      {/* FEATURES */}
+      <section
+        id="features"
+        className="border-t border-white/10 bg-zinc-950/40"
       >
-        Built for curious minds · Powered by AI
-      </motion.p>
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-24">
+          <div className="mb-16 text-center">
+            <p className="text-sm uppercase tracking-[0.25em] text-zinc-500 mb-4">
+              Features
+            </p>
+
+            <h2 className="text-4xl lg:text-6xl font-bold tracking-tight">
+              Everything you need
+              <br />
+              in one workspace.
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+            <FeatureCard
+              icon={<PencilLine className="w-5 h-5" />}
+              title="Smart Notes"
+              description="Write, organize, and structure your ideas in a clean distraction-free workspace."
+            />
+
+            <FeatureCard
+              icon={<Sparkles className="w-5 h-5" />}
+              title="AI Insights"
+              description="Generate summaries, action items, titles, and intelligent insights instantly."
+            />
+
+            <FeatureCard
+              icon={<Share2 className="w-5 h-5" />}
+              title="Share Anywhere"
+              description="Create public note links and collaborate effortlessly with anyone."
+            />
+
+            <FeatureCard
+              icon={<Lock className="w-5 h-5" />}
+              title="Private & Secure"
+              description="Your notes stay protected with secure authentication and encrypted storage."
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ABOUT */}
+      <section
+        id="about"
+        className="border-t border-white/10"
+      >
+        <div className="max-w-5xl mx-auto px-6 lg:px-10 py-28 text-center">
+          <p className="text-sm uppercase tracking-[0.25em] text-zinc-500 mb-6">
+            About Peblo
+          </p>
+
+          <h2 className="text-4xl lg:text-6xl font-bold tracking-tight leading-tight">
+            A calm workspace
+            <br />
+            for your ideas.
+          </h2>
+
+          <p className="mt-8 text-zinc-400 text-lg leading-relaxed max-w-3xl mx-auto">
+            Peblo Notes is designed to help students,
+            creators, developers, and thinkers capture
+            thoughts without distractions.
+            <br />
+            <br />
+            Write notes, organize knowledge, generate
+            AI-powered insights, and build your second
+            brain — all in one elegant workspace.
+          </p>
+        </div>
+      </section>
+
+      {/* AI SECTION */}
+      <section
+        id="ai"
+        className="border-t border-white/10 bg-zinc-950/30"
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-28">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* LEFT */}
+            <div>
+              <p className="text-sm uppercase tracking-[0.25em] text-zinc-500 mb-6">
+                AI Insights
+              </p>
+
+              <h2 className="text-4xl lg:text-6xl font-bold tracking-tight leading-tight">
+                Turn notes into
+                intelligent action.
+              </h2>
+
+              <p className="mt-8 text-zinc-400 text-lg leading-relaxed max-w-xl">
+                Peblo AI analyzes your notes and instantly
+                generates summaries, action items,
+                suggested titles, and insights —
+                helping you think faster and stay organized.
+              </p>
+            </div>
+
+            {/* RIGHT */}
+            <div className="rounded-[32px] border border-white/10 bg-white/[0.03] p-8">
+              <div className="space-y-6">
+                <div className="rounded-2xl bg-black border border-white/10 p-5">
+                  <p className="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-3">
+                    Summary
+                  </p>
+
+                  <p className="text-zinc-300 leading-relaxed">
+                    Peblo Notes helps organize project
+                    planning, generate AI summaries, and
+                    keep track of actionable insights.
+                  </p>
+                </div>
+
+                <div className="rounded-2xl bg-black border border-white/10 p-5">
+                  <p className="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-4">
+                    Action Items
+                  </p>
+
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3 text-zinc-300">
+                      <div className="w-2 h-2 rounded-full bg-white" />
+                      Deploy project to Vercel
+                    </div>
+
+                    <div className="flex items-center gap-3 text-zinc-300">
+                      <div className="w-2 h-2 rounded-full bg-white" />
+                      Improve dashboard responsiveness
+                    </div>
+
+                    <div className="flex items-center gap-3 text-zinc-300">
+                      <div className="w-2 h-2 rounded-full bg-white" />
+                      Generate AI insights
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
 
-// Fixed star positions — no Math.random() at render time
-const STAR_DATA = [
-  { x: 5, y: 10, size: 1.5, delay: 0, duration: 3 },
-  { x: 15, y: 25, size: 1, delay: 0.5, duration: 4 },
-  { x: 25, y: 60, size: 2, delay: 1, duration: 2.5 },
-  { x: 35, y: 15, size: 1.2, delay: 0.3, duration: 3.5 },
-  { x: 45, y: 80, size: 0.8, delay: 0.8, duration: 4 },
-  { x: 55, y: 35, size: 1.8, delay: 0.2, duration: 2.8 },
-  { x: 65, y: 70, size: 1, delay: 1.2, duration: 3.2 },
-  { x: 75, y: 20, size: 1.5, delay: 0.6, duration: 3.8 },
-  { x: 85, y: 50, size: 0.8, delay: 0.4, duration: 4.2 },
-  { x: 92, y: 85, size: 1.3, delay: 1.5, duration: 2.6 },
-  { x: 10, y: 45, size: 2, delay: 0.7, duration: 3.4 },
-  { x: 20, y: 90, size: 1.1, delay: 0.9, duration: 2.9 },
-  { x: 30, y: 40, size: 0.9, delay: 1.3, duration: 3.7 },
-  { x: 40, y: 5, size: 1.6, delay: 0.1, duration: 4.5 },
-  { x: 50, y: 55, size: 1.2, delay: 1.8, duration: 3.1 },
-  { x: 60, y: 30, size: 0.7, delay: 0.5, duration: 3.9 },
-  { x: 70, y: 75, size: 2, delay: 1.1, duration: 2.7 },
-  { x: 80, y: 12, size: 1.4, delay: 0.3, duration: 4.1 },
-  { x: 90, y: 65, size: 1, delay: 1.6, duration: 3.3 },
-  { x: 95, y: 40, size: 1.8, delay: 0.8, duration: 2.5 },
-  { x: 8, y: 78, size: 0.9, delay: 1.4, duration: 4.3 },
-  { x: 48, y: 22, size: 1.3, delay: 0.2, duration: 3.6 },
-  { x: 72, y: 95, size: 0.6, delay: 2, duration: 2.8 },
-  { x: 38, y: 88, size: 1.7, delay: 0.6, duration: 3.2 },
-  { x: 58, y: 48, size: 1, delay: 1.7, duration: 4 },
-];
-
-function Stars() {
+function FeatureCard({
+  icon,
+  title,
+  description,
+}) {
   return (
-    <div className="absolute inset-0 pointer-events-none">
-      {STAR_DATA.map((star, i) => (
-        <motion.div
-          key={i}
-          className="absolute rounded-full bg-white"
-          style={{ left: `${star.x}%`, top: `${star.y}%`, width: star.size, height: star.size }}
-          animate={{ opacity: [0.15, 0.7, 0.15] }}
-          transition={{ duration: star.duration, repeat: Infinity, delay: star.delay, ease: "easeInOut" }}
-        />
-      ))}
-    </div>
-  );
-}
-
-const NOTE_DATA = [
-  { x: "8%", y: "20%", rotate: -12, delay: 0, color: "#7c3aed", label: "Meeting notes", lines: 3 },
-  { x: "82%", y: "15%", rotate: 8, delay: 0.5, color: "#f59e0b", label: "Ideas ✨", lines: 2 },
-  { x: "88%", y: "60%", rotate: -6, delay: 1, color: "#06b6d4", label: "Summary", lines: 4 },
-  { x: "5%", y: "65%", rotate: 10, delay: 1.5, color: "#10b981", label: "Todo list", lines: 3 },
-  { x: "75%", y: "80%", rotate: -8, delay: 0.8, color: "#f43f5e", label: "Quick note", lines: 2 },
-  { x: "18%", y: "82%", rotate: 5, delay: 1.2, color: "#8b5cf6", label: "Research", lines: 4 },
-];
-
-function FloatingNotes() {
-  return (
-    <>
-      {NOTE_DATA.map((note, i) => (
-        <motion.div
-          key={i}
-          className="absolute pointer-events-none hidden lg:block"
-          style={{ left: note.x, top: note.y }}
-          initial={{ opacity: 0, scale: 0.6, rotate: note.rotate - 10 }}
-          animate={{ opacity: 1, scale: 1, rotate: note.rotate, y: [0, -8, 0] }}
-          transition={{
-            opacity: { duration: 0.6, delay: note.delay },
-            scale: { duration: 0.6, delay: note.delay },
-            rotate: { duration: 0.6, delay: note.delay },
-            y: { duration: 3 + note.delay, repeat: Infinity, ease: "easeInOut", delay: note.delay },
-          }}
-        >
-          <div
-            className="w-28 rounded-xl p-3 shadow-2xl"
-            style={{
-              background: "rgba(15,15,20,0.85)",
-              border: `1px solid ${note.color}40`,
-              backdropFilter: "blur(10px)",
-              boxShadow: `0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px ${note.color}20`,
-            }}
-          >
-            <div className="flex items-center gap-1.5 mb-2">
-              <div className="w-2 h-2 rounded-full" style={{ background: note.color }} />
-              <span className="text-white text-[10px] font-medium opacity-90">{note.label}</span>
-            </div>
-            {Array.from({ length: note.lines }).map((_, j) => (
-              <div
-                key={j}
-                className="h-1 rounded-full mb-1.5"
-                style={{ background: `${note.color}30`, width: j === note.lines - 1 ? "60%" : "100%" }}
-              />
-            ))}
-          </div>
-        </motion.div>
-      ))}
-    </>
-  );
-}
-
-function AppPreview() {
-  return (
-    <div
-      className="rounded-2xl overflow-hidden"
-      style={{
-        background: "rgba(15,15,20,0.8)",
-        border: "1px solid rgba(255,255,255,0.08)",
-        boxShadow: "0 32px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04)",
-        backdropFilter: "blur(20px)",
+    <motion.div
+      whileHover={{
+        y: -4,
       }}
+      className="rounded-3xl border border-white/10 bg-white/[0.03] p-7 hover:bg-white/[0.05] transition-all"
     >
-      <div className="flex items-center gap-2 px-4 py-3" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-        <div className="w-3 h-3 rounded-full bg-red-500/60" />
-        <div className="w-3 h-3 rounded-full bg-amber-500/60" />
-        <div className="w-3 h-3 rounded-full bg-green-500/60" />
-        <div className="flex-1 mx-4">
-          <div className="h-5 rounded-md mx-auto" style={{ background: "rgba(255,255,255,0.05)", maxWidth: 200 }} />
-        </div>
+      <div className="w-12 h-12 rounded-2xl border border-white/10 bg-black flex items-center justify-center mb-5 text-white">
+        {icon}
       </div>
-      <div className="flex" style={{ height: 180 }}>
-        <div className="w-40 shrink-0 p-3" style={{ borderRight: "1px solid rgba(255,255,255,0.06)", background: "rgba(15,10,30,0.6)" }}>
-          <div className="flex items-center gap-2 mb-3">
-            <div className="w-4 h-4 rounded bg-violet-600" />
-            <div className="h-2 w-16 rounded-full" style={{ background: "rgba(255,255,255,0.15)" }} />
-          </div>
-          {["Meeting notes ⭐", "Project ideas", "Research"].map((t, i) => (
-            <div key={i} className="px-2 py-1.5 rounded-lg mb-1" style={{ background: i === 0 ? "rgba(124,58,237,0.2)" : "transparent", border: i === 0 ? "1px solid rgba(124,58,237,0.3)" : "1px solid transparent" }}>
-              <div className="h-1.5 rounded-full" style={{ background: i === 0 ? "rgba(167,139,250,0.6)" : "rgba(255,255,255,0.12)", width: ["80%","65%","70%"][i] }} />
-              <div className="h-1 rounded-full mt-1" style={{ background: "rgba(255,255,255,0.06)", width: "50%" }} />
-            </div>
-          ))}
-        </div>
-        <div className="flex-1 p-4">
-          <div className="h-4 w-48 rounded-full mb-3" style={{ background: "rgba(255,255,255,0.15)" }} />
-          <div className="flex gap-1.5 mb-3">
-            {["#work", "#ai"].map((t) => (
-              <div key={t} className="h-4 w-10 rounded-full" style={{ background: "rgba(124,58,237,0.2)", border: "1px solid rgba(124,58,237,0.3)" }} />
-            ))}
-          </div>
-          {[100, 85, 95, 60].map((w, i) => (
-            <div key={i} className="h-1.5 rounded-full mb-2" style={{ background: "rgba(255,255,255,0.08)", width: `${w}%` }} />
-          ))}
-          <div className="mt-3 p-2 rounded-lg" style={{ background: "rgba(124,58,237,0.1)", border: "1px solid rgba(124,58,237,0.2)" }}>
-            <div className="flex items-center gap-1.5 mb-1.5">
-              <div className="w-3 h-3 rounded" style={{ background: "rgba(124,58,237,0.4)" }} />
-              <div className="h-1.5 w-12 rounded-full" style={{ background: "rgba(167,139,250,0.4)" }} />
-            </div>
-            <div className="h-1 w-full rounded-full mb-1" style={{ background: "rgba(167,139,250,0.15)" }} />
-            <div className="h-1 w-3/4 rounded-full" style={{ background: "rgba(167,139,250,0.1)" }} />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
-function NoteIcon() {
-  return (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-      <polyline points="14 2 14 8 20 8" />
-      <line x1="8" y1="13" x2="16" y2="13" />
-      <line x1="8" y1="17" x2="13" y2="17" />
-    </svg>
+      <h3 className="text-xl font-semibold tracking-tight mb-3">
+        {title}
+      </h3>
+
+      <p className="text-zinc-400 leading-relaxed text-sm font-medium">
+        {description}
+      </p>
+    </motion.div>
   );
 }
 
@@ -339,345 +370,3 @@ function NoteIcon() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// "use client";
-
-// import { useRouter } from "next/navigation";
-// import { motion } from "framer-motion";
-
-// const fadeUp = (delay = 0) => ({
-//   initial: { opacity: 0, y: 24 },
-//   animate: { opacity: 1, y: 0 },
-//   transition: { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] },
-// });
-
-// const floatAnim = (delay = 0, range = 10) => ({
-//   animate: {
-//     y: [0, -range, 0],
-//     rotate: [-2, 2, -2],
-//   },
-//   transition: {
-//     duration: 4 + delay,
-//     repeat: Infinity,
-//     ease: "easeInOut",
-//     delay,
-//   },
-// });
-
-// export default function Home() {
-//   const router = useRouter();
-
-//   return (
-//     <main
-//       className="min-h-screen overflow-hidden relative flex flex-col items-center justify-center px-6"
-//       style={{ background: "radial-gradient(ellipse 80% 60% at 50% -10%, #2d1b69 0%, #0f0a1e 50%, #0a0a0f 100%)" }}
-//     >
-//       {/* Stars background */}
-//       <Stars />
-
-//       {/* Floating decorative notes */}
-//       <FloatingNotes />
-
-//       {/* Glow orbs */}
-//       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/10 rounded-full blur-3xl pointer-events-none" />
-//       <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-amber-500/8 rounded-full blur-3xl pointer-events-none" />
-
-//       {/* Main content */}
-//       <div className="relative z-10 flex flex-col items-center text-center max-w-3xl">
-
-//         {/* Logo mark */}
-//         <motion.div {...fadeUp(0)} className="mb-8">
-//           <div className="relative inline-flex">
-//             <div
-//               className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-2xl"
-//               style={{ background: "linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%)", boxShadow: "0 0 40px rgba(124,58,237,0.4)" }}
-//             >
-//               <NoteIcon />
-//             </div>
-//             <motion.div
-//               animate={{ scale: [1, 1.2, 1], opacity: [0.6, 1, 0.6] }}
-//               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-//               className="absolute -top-1 -right-1 w-4 h-4 bg-amber-400 rounded-full flex items-center justify-center"
-//               style={{ boxShadow: "0 0 12px rgba(251,191,36,0.8)" }}
-//             >
-//               <span style={{ fontSize: 8 }}>✦</span>
-//             </motion.div>
-//           </div>
-//         </motion.div>
-
-//         {/* Badge */}
-//         <motion.div {...fadeUp(0.1)} className="mb-6">
-//           <span
-//             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium"
-//             style={{ background: "rgba(124,58,237,0.15)", border: "1px solid rgba(124,58,237,0.3)", color: "#c4b5fd" }}
-//           >
-//             <span style={{ color: "#a78bfa" }}>✦</span>
-//             AI-Powered Notes Workspace
-//           </span>
-//         </motion.div>
-
-//         {/* Headline */}
-//         <motion.h1
-//           {...fadeUp(0.15)}
-//           className="font-bold leading-tight mb-4"
-//           style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", color: "#fff", letterSpacing: "-0.03em", fontFamily: "'Georgia', serif" }}
-//         >
-//           Your ideas,{" "}
-//           <span style={{ background: "linear-gradient(135deg, #a78bfa, #f59e0b)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-//             supercharged
-//           </span>{" "}
-//           by AI
-//         </motion.h1>
-
-//         {/* Subheadline */}
-//         <motion.p
-//           {...fadeUp(0.2)}
-//           className="text-lg leading-relaxed mb-10 max-w-xl"
-//           style={{ color: "rgba(255,255,255,0.45)", fontSize: "1.1rem" }}
-//         >
-//           Write notes, let AI summarize them, organize with tags, and share your thoughts — all in one beautiful workspace built for curious minds.
-//         </motion.p>
-
-//         {/* CTA Buttons */}
-//         <motion.div {...fadeUp(0.25)} className="flex gap-4 mb-16 flex-wrap justify-center">
-//           <motion.button
-//             whileHover={{ scale: 1.04, y: -2 }}
-//             whileTap={{ scale: 0.98 }}
-//             onClick={() => router.push("/auth/signup")}
-//             className="px-8 py-3.5 rounded-xl font-semibold text-sm text-white relative overflow-hidden"
-//             style={{ background: "linear-gradient(135deg, #7c3aed, #5b21b6)", boxShadow: "0 8px 32px rgba(124,58,237,0.4)" }}
-//           >
-//             <span className="relative z-10">Start for free →</span>
-//           </motion.button>
-//           <motion.button
-//             whileHover={{ scale: 1.04, y: -2 }}
-//             whileTap={{ scale: 0.98 }}
-//             onClick={() => router.push("/auth/login")}
-//             className="px-8 py-3.5 rounded-xl font-semibold text-sm"
-//             style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.8)" }}
-//           >
-//             Sign in
-//           </motion.button>
-//         </motion.div>
-
-//         {/* Feature pills */}
-//         <motion.div {...fadeUp(0.3)} className="flex flex-wrap gap-3 justify-center mb-12">
-//           {[
-//             { icon: "✦", label: "AI Summaries" },
-//             { icon: "⭐", label: "Pin & Organize" },
-//             { icon: "🔗", label: "Public Sharing" },
-//             { icon: "📊", label: "Smart Insights" },
-//             { icon: "🏷️", label: "Tag Notes" },
-//           ].map((f, i) => (
-//             <motion.div
-//               key={f.label}
-//               initial={{ opacity: 0, scale: 0.85 }}
-//               animate={{ opacity: 1, scale: 1 }}
-//               transition={{ delay: 0.35 + i * 0.05, duration: 0.4 }}
-//               className="flex items-center gap-2 px-4 py-2 rounded-full text-xs"
-//               style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.5)" }}
-//             >
-//               <span>{f.icon}</span>
-//               {f.label}
-//             </motion.div>
-//           ))}
-//         </motion.div>
-
-//         {/* App preview strip */}
-//         <motion.div {...fadeUp(0.4)} className="w-full max-w-2xl">
-//           <AppPreview />
-//         </motion.div>
-//       </div>
-
-//       {/* Footer */}
-//       <motion.p
-//         initial={{ opacity: 0 }}
-//         animate={{ opacity: 1 }}
-//         transition={{ delay: 0.8 }}
-//         className="absolute bottom-6 text-center text-xs"
-//         style={{ color: "rgba(255,255,255,0.2)" }}
-//       >
-//         Built for curious minds · Powered by AI
-//       </motion.p>
-//     </main>
-//   );
-// }
-
-// function Stars() {
-//   const stars = Array.from({ length: 60 }, (_, i) => ({
-//     id: i,
-//     x: Math.random() * 100,
-//     y: Math.random() * 100,
-//     size: Math.random() * 2 + 0.5,
-//     delay: Math.random() * 3,
-//     duration: 2 + Math.random() * 3,
-//   }));
-
-//   return (
-//     <div className="absolute inset-0 pointer-events-none">
-//       {stars.map((star) => (
-//         <motion.div
-//           key={star.id}
-//           className="absolute rounded-full bg-white"
-//           style={{ left: `${star.x}%`, top: `${star.y}%`, width: star.size, height: star.size, opacity: 0.4 }}
-//           animate={{ opacity: [0.2, 0.8, 0.2] }}
-//           transition={{ duration: star.duration, repeat: Infinity, delay: star.delay, ease: "easeInOut" }}
-//         />
-//       ))}
-//     </div>
-//   );
-// }
-
-// function FloatingNotes() {
-//   const notes = [
-//     { x: "8%", y: "20%", rotate: -12, delay: 0, color: "#7c3aed", label: "Meeting notes", lines: 3 },
-//     { x: "82%", y: "15%", rotate: 8, delay: 0.5, color: "#f59e0b", label: "Ideas ✨", lines: 2 },
-//     { x: "88%", y: "60%", rotate: -6, delay: 1, color: "#06b6d4", label: "Summary", lines: 4 },
-//     { x: "5%", y: "65%", rotate: 10, delay: 1.5, color: "#10b981", label: "Todo list", lines: 3 },
-//     { x: "75%", y: "80%", rotate: -8, delay: 0.8, color: "#f43f5e", label: "Quick note", lines: 2 },
-//     { x: "18%", y: "82%", rotate: 5, delay: 1.2, color: "#8b5cf6", label: "Research", lines: 4 },
-//   ];
-
-//   return (
-//     <>
-//       {notes.map((note, i) => (
-//         <motion.div
-//           key={i}
-//           className="absolute pointer-events-none hidden lg:block"
-//           style={{ left: note.x, top: note.y }}
-//           initial={{ opacity: 0, scale: 0.6, rotate: note.rotate - 10 }}
-//           animate={{ opacity: 1, scale: 1, rotate: note.rotate, y: [0, -8, 0] }}
-//           transition={{
-//             opacity: { duration: 0.6, delay: note.delay },
-//             scale: { duration: 0.6, delay: note.delay },
-//             rotate: { duration: 0.6, delay: note.delay },
-//             y: { duration: 3 + note.delay, repeat: Infinity, ease: "easeInOut", delay: note.delay },
-//           }}
-//         >
-//           <div
-//             className="w-28 rounded-xl p-3 shadow-2xl"
-//             style={{
-//               background: "rgba(15,15,20,0.85)",
-//               border: `1px solid ${note.color}40`,
-//               backdropFilter: "blur(10px)",
-//               boxShadow: `0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px ${note.color}20`,
-//             }}
-//           >
-//             <div className="flex items-center gap-1.5 mb-2">
-//               <div className="w-2 h-2 rounded-full" style={{ background: note.color }} />
-//               <span className="text-white text-[10px] font-medium opacity-90">{note.label}</span>
-//             </div>
-//             {Array.from({ length: note.lines }).map((_, j) => (
-//               <div
-//                 key={j}
-//                 className="h-1 rounded-full mb-1.5"
-//                 style={{
-//                   background: `${note.color}30`,
-//                   width: j === note.lines - 1 ? "60%" : "100%",
-//                 }}
-//               />
-//             ))}
-//           </div>
-//         </motion.div>
-//       ))}
-//     </>
-//   );
-// }
-
-// function AppPreview() {
-//   return (
-//     <div
-//       className="rounded-2xl overflow-hidden"
-//       style={{
-//         background: "rgba(15,15,20,0.8)",
-//         border: "1px solid rgba(255,255,255,0.08)",
-//         boxShadow: "0 32px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04)",
-//         backdropFilter: "blur(20px)",
-//       }}
-//     >
-//       {/* Window chrome */}
-//       <div className="flex items-center gap-2 px-4 py-3" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-//         <div className="w-3 h-3 rounded-full bg-red-500/60" />
-//         <div className="w-3 h-3 rounded-full bg-amber-500/60" />
-//         <div className="w-3 h-3 rounded-full bg-green-500/60" />
-//         <div className="flex-1 mx-4">
-//           <div className="h-5 rounded-md mx-auto" style={{ background: "rgba(255,255,255,0.05)", maxWidth: 200 }} />
-//         </div>
-//       </div>
-
-//       {/* App layout preview */}
-//       <div className="flex" style={{ height: 180 }}>
-//         {/* Sidebar */}
-//         <div className="w-40 shrink-0 p-3" style={{ borderRight: "1px solid rgba(255,255,255,0.06)", background: "rgba(15,10,30,0.6)" }}>
-//           <div className="flex items-center gap-2 mb-3">
-//             <div className="w-4 h-4 rounded bg-violet-600" />
-//             <div className="h-2 w-16 rounded-full" style={{ background: "rgba(255,255,255,0.15)" }} />
-//           </div>
-//           {["Meeting notes ⭐", "Project ideas", "Research"].map((t, i) => (
-//             <div
-//               key={i}
-//               className="px-2 py-1.5 rounded-lg mb-1"
-//               style={{
-//                 background: i === 0 ? "rgba(124,58,237,0.2)" : "transparent",
-//                 border: i === 0 ? "1px solid rgba(124,58,237,0.3)" : "1px solid transparent",
-//               }}
-//             >
-//               <div className="h-1.5 rounded-full" style={{ background: i === 0 ? "rgba(167,139,250,0.6)" : "rgba(255,255,255,0.12)", width: ["80%","65%","70%"][i] }} />
-//               <div className="h-1 rounded-full mt-1" style={{ background: "rgba(255,255,255,0.06)", width: "50%" }} />
-//             </div>
-//           ))}
-//         </div>
-
-//         {/* Editor */}
-//         <div className="flex-1 p-4">
-//           <div className="h-4 w-48 rounded-full mb-3" style={{ background: "rgba(255,255,255,0.15)" }} />
-//           <div className="flex gap-1.5 mb-3">
-//             {["#work", "#ai"].map((t) => (
-//               <div key={t} className="h-4 w-10 rounded-full" style={{ background: "rgba(124,58,237,0.2)", border: "1px solid rgba(124,58,237,0.3)" }} />
-//             ))}
-//           </div>
-//           {[100, 85, 95, 60].map((w, i) => (
-//             <div key={i} className="h-1.5 rounded-full mb-2" style={{ background: "rgba(255,255,255,0.08)", width: `${w}%` }} />
-//           ))}
-//           {/* AI summary card */}
-//           <div className="mt-3 p-2 rounded-lg" style={{ background: "rgba(124,58,237,0.1)", border: "1px solid rgba(124,58,237,0.2)" }}>
-//             <div className="flex items-center gap-1.5 mb-1.5">
-//               <div className="w-3 h-3 rounded" style={{ background: "rgba(124,58,237,0.4)" }} />
-//               <div className="h-1.5 w-12 rounded-full" style={{ background: "rgba(167,139,250,0.4)" }} />
-//             </div>
-//             <div className="h-1 w-full rounded-full mb-1" style={{ background: "rgba(167,139,250,0.15)" }} />
-//             <div className="h-1 w-3/4 rounded-full" style={{ background: "rgba(167,139,250,0.1)" }} />
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// function NoteIcon() {
-//   return (
-//     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-//       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-//       <polyline points="14 2 14 8 20 8" />
-//       <line x1="8" y1="13" x2="16" y2="13" />
-//       <line x1="8" y1="17" x2="13" y2="17" />
-//     </svg>
-//   );
-// }
