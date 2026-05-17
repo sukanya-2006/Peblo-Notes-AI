@@ -1,154 +1,57 @@
-// import { prisma } from "@/lib/prisma";
-// import { NextResponse } from "next/server";
-
-// export async function GET(req) {
-//   try {
-//     const { searchParams } = new URL(req.url);
-//     const search = searchParams.get("search") || "";
-//     const tag = searchParams.get("tag") || "";
-//     const archived = searchParams.get("archived") === "true";
-
-//     const where = {
-//       // Match archived:false AND archived:null (pre-existing rows without the field set)
-//       archived: archived ? true : { not: true },
-//       ...(search && {
-//         OR: [
-//           { title: { contains: search, mode: "insensitive" } },
-//           { content: { contains: search, mode: "insensitive" } },
-//         ],
-//       }),
-//       ...(tag && { tags: { has: tag } }),
-//     };
-
-//     const notes = await prisma.note.findMany({
-//       where,
-//       orderBy: { updatedAt: "desc" },
-//     });
-
-//     return NextResponse.json(notes);
-//   } catch (error) {
-//     console.error(error);
-//     return NextResponse.json(
-//       { error: "Failed to fetch notes" },
-//       { status: 500 }
-//     );
-//   }
-// }
-
-// export async function POST(req) {
-//   try {
-//     const body = await req.json();
-
-//     const note = await prisma.note.create({
-//       data: {
-//         title: body.title || "Untitled Note",
-//         content: body.content || "",
-//         tags: [],
-//         actionItems: [],
-//       },
-//     });
-
-//     return NextResponse.json(note);
-//   } catch (error) {
-//     console.error(error);
-//     return NextResponse.json(
-//       { error: "Failed to create note" },
-//       { status: 500 }
-//     );
-//   }
-// }
-
-// export async function PATCH(req) {
-//   try {
-//     const body = await req.json();
-//     const { id, ...fields } = body;
-
-//     if (!id) {
-//       return NextResponse.json({ error: "Note id is required" }, { status: 400 });
-//     }
-
-//     // Only persist fields that were actually sent
-//     const data = {};
-//     if ("title" in fields) data.title = fields.title;
-//     if ("content" in fields) data.content = fields.content;
-//     if ("tags" in fields) data.tags = fields.tags;
-//     if ("archived" in fields) data.archived = fields.archived;
-//     if ("isPublic" in fields) data.isPublic = fields.isPublic;
-//     if ("summary" in fields) data.summary = fields.summary;
-//     if ("actionItems" in fields) data.actionItems = fields.actionItems;
-//     if ("aiUsed" in fields) data.aiUsed = fields.aiUsed;
-//     if ("suggestedTitle" in fields) data.suggestedTitle = fields.suggestedTitle;
-
-//     // Always bump updatedAt on every save
-//     data.updatedAt = new Date();
-
-//     const note = await prisma.note.update({
-//       where: { id },
-//       data,
-//     });
-
-//     return NextResponse.json(note);
-//   } catch (error) {
-//     console.error(error);
-//     return NextResponse.json(
-//       { error: "Failed to update note" },
-//       { status: 500 }
-//     );
-//   }
-// }
-
-// export async function DELETE(req) {
-//   try {
-//     const body = await req.json();
-
-//     await prisma.note.delete({
-//       where: { id: body.id },
-//     });
-
-//     return NextResponse.json({ message: "Note deleted" });
-//   } catch (error) {
-//     console.error(error);
-//     return NextResponse.json(
-//       { error: "Failed to delete note" },
-//       { status: 500 }
-//     );
-//   }
-// }
-
-
-
-
-
-
-
-
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function GET(req) {
   try {
-    const { searchParams } = new URL(req.url);
+    const { searchParams } =
+      new URL(req.url);
 
-    const search = searchParams.get("search") || "";
-    const tag = searchParams.get("tag") || "";
+    const search =
+      searchParams.get(
+        "search"
+      ) || "";
+
+    const tag =
+      searchParams.get(
+        "tag"
+      ) || "";
+
     const archived =
-      searchParams.get("archived") === "true";
+      searchParams.get(
+        "archived"
+      ) === "true";
+
+    const userId =
+      searchParams.get(
+        "userId"
+      );
 
     const where = {
-      archived: archived ? true : { not: true },
+      ...(userId && {
+        userId,
+      }),
+
+      archived: archived
+        ? true
+        : { not: true },
 
       ...(search && {
         OR: [
           {
             title: {
-              contains: search,
-              mode: "insensitive",
+              contains:
+                search,
+              mode:
+                "insensitive",
             },
           },
+
           {
             content: {
-              contains: search,
-              mode: "insensitive",
+              contains:
+                search,
+              mode:
+                "insensitive",
             },
           },
         ],
@@ -161,20 +64,28 @@ export async function GET(req) {
       }),
     };
 
-    const notes = await prisma.note.findMany({
-      where,
-      orderBy: {
-        updatedAt: "desc",
-      },
-    });
+    const notes =
+      await prisma.note.findMany(
+        {
+          where,
 
-    return NextResponse.json(notes);
+          orderBy: {
+            updatedAt:
+              "desc",
+          },
+        }
+      );
+
+    return NextResponse.json(
+      notes
+    );
   } catch (error) {
     console.error(error);
 
     return NextResponse.json(
       {
-        error: "Failed to fetch notes",
+        error:
+          "Failed to fetch notes",
       },
       {
         status: 500,
@@ -185,38 +96,51 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
-    const body = await req.json();
+    const body =
+      await req.json();
 
-    const note = await prisma.note.create({
-      data: {
-        title:
-          body.title || "Untitled Note",
+    const note =
+      await prisma.note.create(
+        {
+          data: {
+            title:
+              body.title ||
+              "Untitled Note",
 
-        content:
-          body.content || "",
+            content:
+              body.content ||
+              "",
 
-        tags: [],
+            tags: [],
 
-        actionItems: [],
+            actionItems:
+              [],
 
-        shareId:
-          crypto.randomUUID(),
+            shareId:
+              crypto.randomUUID(),
 
-        isPublic: true,
+            isPublic: true,
 
-        archived: false,
+            archived: false,
 
-        aiUsed: false,
-      },
-    });
+            aiUsed: false,
 
-    return NextResponse.json(note);
+            userId:
+              body.userId,
+          },
+        }
+      );
+
+    return NextResponse.json(
+      note
+    );
   } catch (error) {
     console.error(error);
 
     return NextResponse.json(
       {
-        error: "Failed to create note",
+        error:
+          "Failed to create note",
       },
       {
         status: 500,
@@ -227,14 +151,19 @@ export async function POST(req) {
 
 export async function PATCH(req) {
   try {
-    const body = await req.json();
+    const body =
+      await req.json();
 
-    const { id, ...fields } = body;
+    const {
+      id,
+      ...fields
+    } = body;
 
     if (!id) {
       return NextResponse.json(
         {
-          error: "Note id is required",
+          error:
+            "Note id is required",
         },
         {
           status: 400,
@@ -244,55 +173,90 @@ export async function PATCH(req) {
 
     const data = {};
 
-    if ("title" in fields)
-      data.title = fields.title;
+    if (
+      "title" in fields
+    )
+      data.title =
+        fields.title;
 
-    if ("content" in fields)
-      data.content = fields.content;
+    if (
+      "content" in fields
+    )
+      data.content =
+        fields.content;
 
     if ("tags" in fields)
-      data.tags = fields.tags;
+      data.tags =
+        fields.tags;
 
-    if ("archived" in fields)
-      data.archived = fields.archived;
+    if (
+      "archived" in fields
+    )
+      data.archived =
+        fields.archived;
 
-    if ("isPublic" in fields)
-      data.isPublic = fields.isPublic;
+    if (
+      "isPublic" in fields
+    )
+      data.isPublic =
+        fields.isPublic;
 
-    if ("summary" in fields)
-      data.summary = fields.summary;
+    if (
+      "summary" in fields
+    )
+      data.summary =
+        fields.summary;
 
-    if ("actionItems" in fields)
+    if (
+      "actionItems" in
+      fields
+    )
       data.actionItems =
         fields.actionItems;
 
-    if ("aiUsed" in fields)
-      data.aiUsed = fields.aiUsed;
+    if (
+      "aiUsed" in fields
+    )
+      data.aiUsed =
+        fields.aiUsed;
 
-    if ("suggestedTitle" in fields)
+    if (
+      "suggestedTitle" in
+      fields
+    )
       data.suggestedTitle =
         fields.suggestedTitle;
 
-    if ("pinned" in fields)
-      data.pinned = fields.pinned;
+    if (
+      "pinned" in fields
+    )
+      data.pinned =
+        fields.pinned;
 
-    data.updatedAt = new Date();
+    data.updatedAt =
+      new Date();
 
-    const note = await prisma.note.update({
-      where: {
-        id,
-      },
+    const note =
+      await prisma.note.update(
+        {
+          where: {
+            id,
+          },
 
-      data,
-    });
+          data,
+        }
+      );
 
-    return NextResponse.json(note);
+    return NextResponse.json(
+      note
+    );
   } catch (error) {
     console.error(error);
 
     return NextResponse.json(
       {
-        error: "Failed to update note",
+        error:
+          "Failed to update note",
       },
       {
         status: 500,
@@ -303,7 +267,8 @@ export async function PATCH(req) {
 
 export async function DELETE(req) {
   try {
-    const body = await req.json();
+    const body =
+      await req.json();
 
     await prisma.note.delete({
       where: {
@@ -311,15 +276,19 @@ export async function DELETE(req) {
       },
     });
 
-    return NextResponse.json({
-      message: "Note deleted",
-    });
+    return NextResponse.json(
+      {
+        message:
+          "Note deleted",
+      }
+    );
   } catch (error) {
     console.error(error);
 
     return NextResponse.json(
       {
-        error: "Failed to delete note",
+        error:
+          "Failed to delete note",
       },
       {
         status: 500,
@@ -327,12 +296,6 @@ export async function DELETE(req) {
     );
   }
 }
-
-
-
-
-
-
 
 
 
