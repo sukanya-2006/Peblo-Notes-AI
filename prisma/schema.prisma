@@ -11,12 +11,11 @@ model Profile {
   id        String   @id @default(cuid())
   email     String   @unique
   name      String?
-  notes     Note[]
   createdAt DateTime @default(now())
 }
 
 model Note {
-  id              String    @id @default(cuid())
+  id              String   @id @default(cuid())
 
   title           String
   content         String
@@ -28,21 +27,19 @@ model Note {
 
   tags            String[]
 
-  archived        Boolean   @default(false)
+  archived        Boolean  @default(false)
 
-  isPublic        Boolean   @default(false)
+  isPublic        Boolean  @default(false)
 
-  shareId         String?   @unique
+  shareId         String?  @unique
 
-  aiUsed          Boolean   @default(false)
+  aiUsed          Boolean  @default(false)
 
   userId          String?
-
-  user            Profile? @relation(fields: [userId], references: [id])
 
   createdAt       DateTime @default(now())
 
   updatedAt       DateTime @updatedAt
 
-  pinned    Boolean   @default(false)
+  pinned          Boolean  @default(false)
 }
